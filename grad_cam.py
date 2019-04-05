@@ -108,7 +108,7 @@ def grad_cam(input_model, image, cls, layer_name):
     cam = np.dot(output, weights)
 
     # Process CAM
-    cam = cv2.resize(cam, (H, W), cv2.INTER_LINEAR)
+    cam = cv2.resize(cam, (W, H), cv2.INTER_LINEAR)
     cam = np.maximum(cam, 0)
     cam = cam / cam.max()
     return cam
@@ -126,7 +126,7 @@ def grad_cam_batch(input_model, images, classes, layer_name):
     cams = np.einsum('ijkl,il->ijk', conv_output, weights)
     
     # Process CAMs
-    new_cams = np.empty((images.shape[0], H, W))
+    new_cams = np.empty((images.shape[0], W, H))
     for i in range(new_cams.shape[0]):
         cam_i = cams[i] - cams[i].mean()
         cam_i = (cam_i + 1e-10) / (np.linalg.norm(cam_i, 2) + 1e-10)
