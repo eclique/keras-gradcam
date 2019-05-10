@@ -110,9 +110,11 @@ def grad_cam(input_model, image, cls, layer_name):
     # Process CAM
     cam = cv2.resize(cam, (W, H), cv2.INTER_LINEAR)
     cam = np.maximum(cam, 0)
-    cam = cam / cam.max()
+    cam_max = cam.max() 
+    if cam_max != 0: 
+        cam = cam / cam_max
     return cam
-
+    
 def grad_cam_batch(input_model, images, classes, layer_name):
     """GradCAM method for visualizing input saliency.
     Same as grad_cam but processes multiple images in one run."""
