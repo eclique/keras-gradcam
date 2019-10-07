@@ -39,6 +39,7 @@ def deprocess_image(x):
     https://github.com/fchollet/keras/blob/master/examples/conv_filter_visualization.py
     """
     # normalize tensor: center on 0., ensure std is 0.25
+    x = x.copy()
     x -= x.mean()
     x /= (x.std() + K.epsilon())
     x *= 0.25
